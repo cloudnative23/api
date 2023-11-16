@@ -360,7 +360,7 @@ paths:
             tags:
                 - passenger
                 - driver
-            sumary: 刪除請求
+            summary: 刪除請求
             security:
                 - cookieAuth: []
             responses:
