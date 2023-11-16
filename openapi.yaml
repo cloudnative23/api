@@ -299,7 +299,9 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/Request"
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/Request"
         post:
             tags:
                 - passenger
