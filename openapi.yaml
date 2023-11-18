@@ -15,9 +15,9 @@ tags:
 paths:
     /login:
         post:
-            tags:
-                - user
-            summary: Request to login
+            tags: ["user"]
+            summary: 登入系統
+            description: 呼叫此 API 並傳入 E-mail 及密碼，即可登入。此 API 會回傳 Set-Cookies Header 來設定瀏覽器 Cookies 以維持登入狀態。
             operationId: login
             security: []
             requestBody:
@@ -41,11 +41,11 @@ paths:
                     $ref: "#/components/responses/ErrorMessage"
     /logout:
         post:
-            tags:
-                - user
+            tags: ["user"]
             security:
                 - cookieAuth: []
-            summary: Logout current user
+            summary: 登出系統
+            description: 此 API 會讓 Session 失效，並刪除瀏覽器中的 Session cookies 。
             operationId: logout
             responses:
                 "201":
@@ -53,9 +53,8 @@ paths:
 
     /me:
         get:
-            tags:
-                - user
-            summary: Get current user
+            tags: ["user"]
+            summary: 取得目前用戶資訊
             security:
                 - cookieAuth: []
             operationId: user
@@ -68,14 +67,12 @@ paths:
                                 $ref: "#/components/schemas/User"
     /routes:
         get:
-            tags:
-                - passenger
-                - driver
-            summary: 取得行程
+            tags: ["passenger", "driver"]
+            summary: 取得行程列表
             security:
                 - cookieAuth: []
             description: |-
-                取得行程。 mode 參數需帶三種模式其中一種：
+                不管是司機或乘客，所有取得行程的操作都是透過此 API 。 其 mode 參數需帶三種模式其中一種：
                  - available: 系統中現有有位置且允許搜尋的行程
                  - attending: 作為乘客參與的行程
                  - driving: 作為司機開車載人的行程
@@ -89,20 +86,59 @@ paths:
                       enum: ["available", "attending", "driving"]
                 - in: query
                   name: form
-                  description: 起始日期
+                  description: 起始日期時間
                   schema:
                       type: string
-                      format: date
+                      format: date-time
                       examples:
-                          - "2023-10-22"
+                          - "2023-10-22T08:30"
                           - "today"
+                          - "now"
                 - in: query
                   name: to
-                  description: 結束日期
+                  description: 結束日期時間
                   schema:
                       type: string
                       format: date
                       examples: ["2023-10-25"]
+                - in: query
+                  name: n
+                  description: 回傳筆數
+                  schema:
+                      type: integer
+                      examples: ["1"]
+                - in: query
+                  name: on
+                  description: 上車站點
+                  schema:
+                      type: integer
+                      examples: ["2"]
+                - in: query
+                  name: off
+                  description: 下載站點
+                  schema:
+                      type: integer
+                      examples: ["3"]
+                - in: query
+                  name: on-datetime
+                  description: 上車時間。為相似度排序用，若未按相似度排序則無作用。
+                  schema:
+                      type: string
+                      format: date-time
+                      examples: ["2023-10-21T08:30"]
+                - in: query
+                  name: off-datetime
+                  description: 下車時間。為相似度排序用，若未按相似度排序則無作用。
+                  schema:
+                      type: string
+                      format: date-time
+                      examples: ["2023-10-21T09:30"]
+                - in: query
+                  name: order-mode
+                  description: 排序依據
+                  schema:
+                      type: string
+                      enum: ["datetime", "similarity"]
             responses:
                 "200":
                     description: 成功取得行程
@@ -113,9 +149,8 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Route"
         post:
-            tags:
-                - driver
-            summary: Post new route
+            tags: ["driver"]
+            summary: 新增行程
             security:
                 - cookieAuth: []
             requestBody:
@@ -143,6 +178,8 @@ paths:
                                                 type: string
                                                 format: date-time
                                                 examples: ["2023-11-16T10:30"]
+                                carInfo:
+                                    $ref: "#/components/schemas/CarInfo"
             responses:
                 "201":
                     description: Successful Operation
@@ -152,10 +189,8 @@ paths:
                                 $ref: "#/components/schemas/Route"
     /routes/{id}:
         get:
-            tags:
-                - passenger
-                - driver
-            summary: Get the info of a route_id
+            tags: ["passenger", "driver"]
+            summary: 取得特定行程
             security:
                 - cookieAuth: []
             parameters:
@@ -178,9 +213,8 @@ paths:
                     description: Route not found
                     $ref: "#/components/responses/ErrorMessage"
         delete:
-            tags:
-                - driver
-            summary: Delete the specified routes
+            tags: ["driver"]
+            summary: 刪除特定行程
             security:
                 - cookieAuth: []
             parameters:
@@ -203,10 +237,8 @@ paths:
                     $ref: "#/components/responses/ErrorMessage"
     /routes/{id}/stations:
         get:
-            tags:
-                - driver
-                - passenger
-            description: Get list of the stations in the route
+            tags: ["passenger", "driver"]
+            summary: 取得行程內停靠站列表
             security:
                 - cookieAuth: []
             parameters:
@@ -228,9 +260,8 @@ paths:
                     $ref: "#/components/responses/ErrorMessage"
     /routes/{id}/stations/{station_id}:
         put:
-            tags:
-                - driver
-            description: Add a new station to the route
+            tags: ["driver"]
+            summary: 針對行程新增停靠站
             security:
                 - cookieAuth: []
             parameters:
@@ -267,9 +298,8 @@ paths:
                     description: Permission Denied
                     $ref: "#/components/responses/ErrorMessage"
         delete:
-            tags:
-                - driver
-            description: Delete the station in the route
+            tags: ["driver"]
+            summary: 針對行程刪除停靠站
             security:
                 - cookieAuth: []
             responses:
@@ -280,10 +310,8 @@ paths:
                     $ref: "#/components/responses/ErrorMessage"
     /requests:
         get:
-            tags:
-                - passenger
-                - driver
-            summary: 取得請求
+            tags: ["passenger", "driver"]
+            summary: 取得請求列表
             security:
                 - cookieAuth: []
             operationId: requestsGet
@@ -303,9 +331,7 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Request"
         post:
-            tags:
-                - passenger
-                - driver
+            tags: ["passenger", "driver"]
             summary: 新增請求
             security:
                 - cookieAuth: []
@@ -345,12 +371,19 @@ paths:
                     $ref: "#/components/responses/ErrorMessage"
     /requests/{id}:
         get:
-            tags:
-                - passenger
-                - driver
-            summary: 使用 ID 取得請求
+            tags: ["passenger", "driver"]
+            summary: 取得特定請求
             security:
                 - cookieAuth: []
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  description: "請求 ID"
+                  schema:
+                      type: integer
+                      format: int64
+                      examples: ["3"]
             responses:
                 "200":
                     description: 操作成功
@@ -359,21 +392,44 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Request"
         delete:
-            tags:
-                - passenger
-                - driver
-            summary: 刪除請求
+            tags: ["passenger", "driver"]
+            summary: 刪除特定請求
             security:
                 - cookieAuth: []
             responses:
                 "204":
                     description: 操作成功
+                "403":
+                    description: 沒有權限刪除此請求
+                    $ref: "#/components/responses/ErrorMessage"
+    /requests/{id}/accept:
+        post:
+            tags: ["driver"]
+            summary: 接受共乘請求
+            security:
+                - cookieAuth: []
+            responses:
+                "204":
+                    description: 成功接受請求
+                "403":
+                    description: 沒有權限接受此請求
+                    $ref: "#/components/responses/ErrorMessage"
+    /requests/{id}/deny:
+        post:
+            tags: ["driver"]
+            summary: 拒絕共乘請求
+            security:
+                - cookieAuth: []
+            responses:
+                "204":
+                    description: 成功拒絕請求
+                "403":
+                    description: 沒有權限拒絕此請求
+                    $ref: "#/components/responses/ErrorMessage"
     /notifications:
         get:
-            tags:
-                - passenger
-                - driver
-            summary: 取得通知
+            tags: ["passenger", "driver"]
+            summary: 取得通知列表
             security:
                 - cookieAuth: []
             parameters:
@@ -392,11 +448,25 @@ paths:
                                 type: array
                                 items:
                                     $ref: "#/components/schemas/Notification"
+    /notifications/read:
+        post:
+            tags: ["passenger", "driver"]
+            summary: 通知列表設為已讀
+            security:
+                - cookieAuth: []
+            parameters:
+                - in: query
+                  name: mode
+                  description: 可以選擇只設定乘客或司機通知列表為已讀
+                  schema:
+                      type: string
+                      enum: ["passenger", "driver"]
+            responses:
+                "204":
+                    description: 成功把通知列表設為已讀
     /notifications/{id}:
         get:
-            tags:
-                - passenger
-                - driver
+            tags: ["passenger", "driver"]
             summary: 使用通知 ID 取得通知
             security:
                 - cookieAuth: []
@@ -420,16 +490,52 @@ paths:
                     $ref: "#/components/responses/ErrorMessage"
     /notifications/{id}/read:
         post:
-            tags:
-                - passenger
-                - driver
+            tags: ["passenger", "driver"]
             summary: 設定通知為已讀
+            security:
+                - cookieAuth: []
             responses:
                 "204":
                     description: 操作成功
                 "404":
                     description: 找不到此則通知
                     $ref: "#/components/responses/ErrorMessage"
+    /stations:
+        get:
+            tags: ["passenger", "driver"]
+            summary: 取得所有站點
+            security:
+                - cookieAuth: []
+            responses:
+                "200":
+                    description: 取得站點成功
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Station'
+    /stations/{id}:
+        get:
+            tags: ["passenger", "driver"]
+            security:
+                - cookieAuth: []
+            parameters:
+                - in: path
+                  name: id
+                  description: 站點 ID
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+                      examples: ["3"]
+            responses:
+                "200":
+                    description: 取得站點成功
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Station'
 components:
     schemas:
         User:
@@ -438,31 +544,53 @@ components:
                 id:
                     type: integer
                     format: int64
-                    example: 10
+                    examples: [10]
                 name:
                     type: string
-                    example: John James
+                    examples: [John James]
                 avatar:
                     type: string
                     format: url
                 email:
                     type: string
-                    example: john@email.com
+                    examples: [john@email.com]
                 password:
                     type: string
                     writeOnly: true
-                    example: "<password>"
+                    examples: ["<password>"]
+                
+        CarInfo:
+            type: object
+            properties:
+                color:
+                    type: string
+                    format: string
+                    examples: ["紅色"]
+                capacity:
+                    type: integer
+                    description: 最大共乘人數
+                    examples: ["3"]
+                licensePlateNumber:
+                    type: string
+                    description: 車牌號碼
+                    examples: ["ABC-0123"]
         Route:
             type: object
             properties:
                 id:
                     type: integer
                     format: int64
-                    example: 23
+                    examples: [23]
                 date:
                     type: string
                     format: date
-                    example: 2023-10-22
+                    examples: ["2023-10-22"]
+                workStatus:
+                    type: boolean
+                status:
+                    type: string
+                    readOnly: true
+                    enum: ["available", "full", "expired", "deleted"]
                 stations:
                     type: array
                     items:
@@ -471,15 +599,15 @@ components:
                             id:
                                 type: integer
                                 description: station ID
-                                example: 5
+                                examples: [5]
                             name:
                                 type: string
                                 format: string
-                                example: 臺大校門口
+                                examples: ["臺大校門口"]
                             datetime:
                                 type: string
                                 format: datetime
-                                example: 2023-10-22T07:30
+                                examples: ["2023-10-22T07:30"]
                 driver:
                     $ref: "#/components/schemas/User"
         Request:
@@ -488,7 +616,12 @@ components:
                 id:
                     type: integer
                     format: int64
-                    example: 20
+                    examples: ["20"]
+                status:
+                    type: string
+                    readOnly: true
+                    enum: ["new", "accepted", "denied", "expired", "deleted"]
+                    examples: ["new"]
                 passenger:
                     $ref: "#/components/schemas/User"
                 route:
@@ -503,28 +636,21 @@ components:
                 id:
                     type: integer
                     format: int64
-                    example: 23
+                    examples: ["23"]
                 name:
                     type: string
                     format: string
-                    example: 臺大校門口
+                    examples: ["臺大校門口"]
         Notification:
             type: object
             properties:
                 id:
                     type: integer
                     format: int64
-                    example: 3
-                title:
-                    type: string
-                    example: "乘客請求通知"
-                content:
-                    type: string
-                    example: "乘客 XXX 發送共乘請求，請點此來查看"
-                location:
-                    type: string
-                    format: url
-                    example: "https://example.com"
+                    examples: [3]
+                read:
+                    type: boolean
+                # TODO
     responses:
         ErrorMessage:
             description: 回傳錯誤訊息用
