@@ -318,9 +318,27 @@ paths:
             parameters:
                 - name: mode
                   in: query
+                  required: true
                   schema:
                       type: string
                       enum: ["available", "me"]
+                - in: query
+                  name: from
+                  schema:
+                      type: string
+                      format: date-time
+                      examples: ["2022-10-30T10:30"]
+                - in: query
+                  name: to
+                  schema:
+                      type: string
+                      format: date-time
+                      examples: ["2022-10-30T20:30"]
+                - in: query
+                  name: n
+                  schema:
+                      type: integer
+                      examples: [3]
             responses:
                 "200":
                     description: 成功取得請求
@@ -518,6 +536,7 @@ paths:
     /stations/{id}:
         get:
             tags: ["passenger", "driver"]
+            summary: 取得特定站點資訊
             security:
                 - cookieAuth: []
             parameters:
@@ -610,6 +629,8 @@ components:
                                 examples: ["2023-10-22T07:30"]
                 driver:
                     $ref: "#/components/schemas/User"
+                carInfo:
+                    $ref: "#/components/schemas/CarInfo"
         Request:
             type: object
             properties:
