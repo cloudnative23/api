@@ -578,7 +578,7 @@ components:
                 phone:
                     type: string
                     format: phone
-                    examples: ["0900000000"]
+                    examples: ["0912123456"]
                 password:
                     type: string
                     writeOnly: true
@@ -625,14 +625,10 @@ components:
                     type: string
                     format: url
                     examples: ["https://example.com/avatar.png"]
-                email:
-                    type: string
-                    format: email
-                    examples: ["john@email.com"]
                 phone:
                     type: string
                     format: phone
-                    examples: ["0900000000"]
+                    examples: ["0912123456"]
         CarInfo:
             type: object
             properties:
