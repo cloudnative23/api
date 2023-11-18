@@ -583,6 +583,20 @@ components:
                     type: string
                     writeOnly: true
                     examples: ["<password>"]
+                notificationCount:
+                    type: object
+                    properties:
+                        driver:
+                            type: integer
+                        passenger:
+                            type: integer
+                requestCount:
+                    type: object
+                    properties:
+                        driver:
+                            type: integer
+                        passenger:
+                            type: integer
         UserSimple:
             type: object
             properties:
