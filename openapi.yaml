@@ -566,18 +566,59 @@ components:
                     examples: [10]
                 name:
                     type: string
-                    examples: [John James]
+                    examples: ["John James"]
                 avatar:
                     type: string
                     format: url
+                    examples: ["https://example.com/avatar.png"]
                 email:
                     type: string
-                    examples: [john@email.com]
+                    format: email
+                    examples: ["john@email.com"]
+                phone:
+                    type: string
+                    format: phone
+                    examples: ["0900000000"]
                 password:
                     type: string
                     writeOnly: true
                     examples: ["<password>"]
-                
+        UserSimple:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int64
+                    examples: [10]
+                name:
+                    type: string
+                    examples: ["John James"]
+                avatar:
+                    type: string
+                    format: url
+                    examples: ["https://example.com/avatar.png"]
+        UserSimpleWithContact:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int64
+                    examples: [10]
+                name:
+                    type: string
+                    examples: ["John James"]
+                avatar:
+                    type: string
+                    format: url
+                    examples: ["https://example.com/avatar.png"]
+                email:
+                    type: string
+                    format: email
+                    examples: ["john@email.com"]
+                phone:
+                    type: string
+                    format: phone
+                    examples: ["0900000000"]
         CarInfo:
             type: object
             properties:
@@ -627,8 +668,20 @@ components:
                                 type: string
                                 format: datetime
                                 examples: ["2023-10-22T07:30"]
+                            on:
+                                type: array
+                                items:
+                                    type: integer
+                            off:
+                                type: array
+                                items:
+                                    type: integer
+                passengers:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/UserSimpleWithContact"
                 driver:
-                    $ref: "#/components/schemas/User"
+                    $ref: "#/components/schemas/UserSimpleWithContact"
                 carInfo:
                     $ref: "#/components/schemas/CarInfo"
         Request:
@@ -644,7 +697,7 @@ components:
                     enum: ["new", "accepted", "denied", "expired", "deleted"]
                     examples: ["new"]
                 passenger:
-                    $ref: "#/components/schemas/User"
+                    $ref: "#/components/schemas/UserSimple"
                 route:
                     $ref: "#/components/schemas/Route"
                 on:
@@ -671,7 +724,16 @@ components:
                     examples: [3]
                 read:
                     type: boolean
-                # TODO
+                for:
+                    type: string
+                    enum: ["passenger", "driver"]
+                category:
+                    type: string
+                    enum: ["request", "request-accepted", "request-denied", "reminder-driving", "reminder-attending"]
+                route:
+                    $ref: "#/components/schemas/Route"
+                request:
+                    $ref: "#/components/schemas/Request"
     responses:
         ErrorMessage:
             description: 回傳錯誤訊息用
