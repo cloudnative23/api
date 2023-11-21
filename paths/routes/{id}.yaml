@@ -1,0 +1,44 @@
+parameters:
+  - name: id
+    in: path
+    description: Route id
+    required: true
+    schema:
+      type: integer
+      format: int64
+    example: 10
+get:
+  tags:
+    - passenger
+    - driver
+  summary: 取得特定行程
+  security:
+    - cookieAuth: []
+  responses:
+    '200':
+      description: Successfully get the specified route
+      content:
+        application/json:
+          schema:
+            $ref: ../../components/schemas/Route.yaml
+          examples:
+            SampleRoute:
+              $ref: ../../components/examples/Route.yaml
+    '404':
+      description: Route not found
+      $ref: ../../components/responses/ErrorMessage.yaml
+delete:
+  tags:
+    - driver
+  summary: 刪除特定行程
+  security:
+    - cookieAuth: []
+  responses:
+    '204':
+      description: Successful operation
+    '403':
+      description: Permission denied
+      $ref: ../../components/responses/ErrorMessage.yaml
+    '404':
+      description: Route not found
+      $ref: ../../components/responses/ErrorMessage.yaml

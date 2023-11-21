@@ -1,0 +1,19 @@
+put:
+  tags:
+    - passenger
+    - driver
+  summary: 通知列表設為已讀
+  security:
+    - cookieAuth: []
+  parameters:
+    - in: query
+      name: mode
+      description: 可以選擇只設定乘客或司機通知列表為已讀
+      schema:
+        type: string
+        enum:
+          - passenger
+          - driver
+  responses:
+    '204':
+      description: 成功把通知列表設為已讀

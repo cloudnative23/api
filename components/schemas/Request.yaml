@@ -1,0 +1,41 @@
+type: object
+properties:
+  id:
+    type: integer
+    format: int64
+    examples:
+      - '20'
+  status:
+    type: string
+    readOnly: true
+    enum:
+      - new
+      - accepted
+      - denied
+      - expired
+      - deleted
+    examples:
+      - new
+  date:
+    type: string
+    format: date
+    readOnly: true
+  workStatus:
+    type: boolean
+  passenger:
+    $ref: ./UserSimple.yaml
+  route:
+    $ref: ./Route.yaml
+  'on':
+    $ref: ./Station.yaml
+  'off':
+    $ref: ./Station.yaml
+example:
+  id: 11
+  status: new
+  date: '2023-10-25'
+  workStatus: true
+  passenger:
+    id: 10
+    name: John James
+    avatar: https://example.com/avatar.png

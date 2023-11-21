@@ -1,0 +1,14 @@
+get:
+  tags:
+    - user
+  summary: 取得目前用戶資訊
+  security:
+    - cookieAuth: []
+  operationId: user
+  responses:
+    '200':
+      description: 成功取得用戶資訊
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/User.yaml

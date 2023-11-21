@@ -1,0 +1,28 @@
+post:
+  tags:
+    - user
+  summary: 登入系統
+  description: >-
+    呼叫此 API 並傳入 E-mail 及密碼，即可登入。此 API 會回傳 Set-Cookies Header 來設定瀏覽器 Cookies
+    以維持登入狀態。
+  operationId: login
+  security: []
+  requestBody:
+    description: Supply user credential to login
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+            password:
+              type: string
+              format: password
+  responses:
+    '204':
+      description: 登入成功
+    '403':
+      description: 登入失敗
+      $ref: ../components/responses/ErrorMessage.yaml

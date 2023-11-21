@@ -1,0 +1,82 @@
+get:
+  tags:
+    - passenger
+    - driver
+  summary: 取得請求列表
+  security:
+    - cookieAuth: []
+  operationId: requestsGet
+  parameters:
+    - name: mode
+      in: query
+      required: true
+      schema:
+        type: string
+        enum:
+          - available
+          - me
+    - in: query
+      name: from
+      schema:
+        type: string
+        format: date-time
+      example: 2022-10-30T10:30
+    - in: query
+      name: to
+      schema:
+        type: string
+        format: date-time
+      example: 2022-10-30T20:30
+    - in: query
+      name: 'n'
+      schema:
+        type: integer
+      example: 3
+  responses:
+    '200':
+      description: 成功取得請求
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/Request.yaml
+post:
+  tags:
+    - passenger
+    - driver
+  summary: 新增請求
+  security:
+    - cookieAuth: []
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            workStatus:
+              type: boolean
+            route:
+              type: integer
+              format: int64
+            'on':
+              type: integer
+              format: int64
+            'off':
+              type: integer
+              format: int64
+          example:
+            workStatus: false
+            route: 10
+            'on': 1
+            'off': 3
+  responses:
+    '200':
+      description: Request created
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Request.yaml
+    '400':
+      description: 有相同時間的請求，或該時間已安排行程
+      $ref: ../components/responses/ErrorMessage.yaml

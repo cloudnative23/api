@@ -1,0 +1,37 @@
+parameters:
+  - in: path
+    name: id
+    required: true
+    description: 請求 ID
+    schema:
+      type: integer
+      format: int64
+      examples:
+        - '3'
+get:
+  tags:
+    - passenger
+    - driver
+  summary: 取得特定請求
+  security:
+    - cookieAuth: []
+  responses:
+    '200':
+      description: 操作成功
+      content:
+        application/json:
+          schema:
+            $ref: ../../components/schemas/Request.yaml
+delete:
+  tags:
+    - passenger
+    - driver
+  summary: 刪除特定請求
+  security:
+    - cookieAuth: []
+  responses:
+    '204':
+      description: 操作成功
+    '403':
+      description: 沒有權限刪除此請求
+      $ref: ../../components/responses/ErrorMessage.yaml

@@ -1,0 +1,9 @@
+description: 回傳錯誤訊息用
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message

@@ -1,0 +1,15 @@
+type: object
+properties:
+  color:
+    type: string
+    format: string
+  capacity:
+    type: integer
+    description: 最大共乘人數
+  licensePlateNumber:
+    type: string
+    description: 車牌號碼
+example:
+  color: 紅色
+  capacity: 3
+  licensePlateNumber: ABC-0123

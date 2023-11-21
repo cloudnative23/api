@@ -1,0 +1,30 @@
+parameters:
+  - in: path
+    name: id
+    description: Route ID
+    required: true
+    schema:
+      type: string
+    example: 10
+get:
+  tags:
+    - passenger
+    - driver
+  summary: 取得行程內停靠站列表
+  security:
+    - cookieAuth: []
+  responses:
+    '200':
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../../../components/schemas/StationInRoute.yaml
+          examples:
+            sampleStationList:
+              $ref: ../../../components/examples/StationsInRoute.yaml
+    '404':
+      description: Route not found
+      $ref: ../../../components/responses/ErrorMessage.yaml

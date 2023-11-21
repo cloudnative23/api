@@ -1,0 +1,34 @@
+type: object
+properties:
+  id:
+    type: integer
+    format: int64
+    examples:
+      - 23
+  date:
+    type: string
+    format: date
+    examples:
+      - '2023-10-22'
+  workStatus:
+    type: boolean
+  status:
+    type: string
+    readOnly: true
+    enum:
+      - available
+      - full
+      - expired
+      - deleted
+  stations:
+    type: array
+    items:
+      $ref: ./StationInRoute.yaml
+  passengers:
+    type: array
+    items:
+      $ref: ./UserSimpleWithContact.yaml
+  driver:
+    $ref: ./UserSimpleWithContact.yaml
+  carInfo:
+    $ref: ./CarInfo.yaml

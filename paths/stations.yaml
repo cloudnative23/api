@@ -1,0 +1,25 @@
+get:
+  tags:
+    - passenger
+    - driver
+  summary: 取得所有站點
+  security:
+    - cookieAuth: []
+  responses:
+    '200':
+      description: 取得站點成功
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/Station.yaml
+          example:
+            - id: 1
+              name: 台北車站
+            - id: 2
+              name: 台大校門口
+            - id: 3
+              name: 台積電新竹3廠東側門
+            - id: 4
+              name: 台積電台南2廠西側門

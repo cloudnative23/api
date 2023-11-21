@@ -1,0 +1,22 @@
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: integer
+      format: int64
+      examples:
+        - 40
+put:
+  tags:
+    - passenger
+    - driver
+  summary: 設定通知為已讀
+  security:
+    - cookieAuth: []
+  responses:
+    '204':
+      description: 操作成功
+    '404':
+      description: 找不到此則通知
+      $ref: ../../../components/responses/ErrorMessage.yaml

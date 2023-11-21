@@ -1,0 +1,26 @@
+get:
+  tags:
+    - passenger
+    - driver
+  summary: 取得通知列表
+  security:
+    - cookieAuth: []
+  parameters:
+    - in: query
+      name: mode
+      description: 通知取得模式
+      schema:
+        type: string
+        enum:
+          - all
+          - passenger
+          - driver
+  responses:
+    '200':
+      description: 成功取得通知
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/Notification.yaml

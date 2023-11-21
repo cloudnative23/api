@@ -1,0 +1,22 @@
+parameters:
+  - in: path
+    name: id
+    required: true
+    description: 請求 ID
+    schema:
+      type: integer
+      format: int64
+      examples:
+        - '3'
+put:
+  tags:
+    - driver
+  summary: 拒絕共乘請求
+  security:
+    - cookieAuth: []
+  responses:
+    '204':
+      description: 成功拒絕請求
+    '403':
+      description: 沒有權限拒絕此請求
+      $ref: ../../../components/responses/ErrorMessage.yaml

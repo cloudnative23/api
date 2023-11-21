@@ -1,0 +1,26 @@
+parameters:
+  - in: path
+    name: id
+    description: 站點 ID
+    required: true
+    schema:
+      type: integer
+      format: int64
+    example: 1
+get:
+  tags:
+    - passenger
+    - driver
+  summary: 取得特定站點資訊
+  security:
+    - cookieAuth: []
+  responses:
+    '200':
+      description: 取得站點成功
+      content:
+        application/json:
+          schema:
+            $ref: ../../components/schemas/Station.yaml
+          example:
+            id: 1
+            name: 台北車站

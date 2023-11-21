@@ -1,0 +1,11 @@
+post:
+  tags:
+    - user
+  security:
+    - cookieAuth: []
+  summary: 登出系統
+  description: 此 API 會讓 Session 失效，並刪除瀏覽器中的 Session cookies 。
+  operationId: logout
+  responses:
+    '204':
+      description: 登出成功

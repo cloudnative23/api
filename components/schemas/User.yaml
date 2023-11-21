@@ -1,0 +1,53 @@
+type: object
+properties:
+  id:
+    type: integer
+    format: int64
+    examples:
+      - 10
+  name:
+    type: string
+    examples:
+      - John James
+  avatar:
+    type: string
+    format: url
+    examples:
+      - https://example.com/avatar.png
+  email:
+    type: string
+    format: email
+    examples:
+      - john@email.com
+  phone:
+    type: string
+    format: phone
+    examples:
+      - '0912123456'
+  password:
+    type: string
+    writeOnly: true
+    examples:
+      - <password>
+  notificationCount:
+    type: object
+    properties:
+      driver:
+        type: integer
+        examples:
+          - 5
+      passenger:
+        type: integer
+        examples:
+          - 3
+  requestCount:
+    type: object
+    properties:
+      driver:
+        type: integer
+        examples:
+          - 5
+      passenger:
+        type: integer
+        examples:
+          - 10

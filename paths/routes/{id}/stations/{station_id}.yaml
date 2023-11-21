@@ -1,0 +1,62 @@
+parameters:
+  - in: path
+    name: id
+    description: Route ID
+    required: true
+    schema:
+      type: integer
+      format: int64
+    example: 10
+  - in: path
+    name: station_id
+    description: Station ID
+    required: true
+    schema:
+      type: integer
+      format: int64
+    example: 1
+put:
+  tags:
+    - driver
+  summary: 針對行程新增停靠站
+  security:
+    - cookieAuth: []
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            datetime:
+              type: string
+              format: date-time
+        example:
+          datetime: 2023-10-22T10:30
+  responses:
+    '200':
+      description: Operation Successful
+      content:
+        application/json:
+          schema:
+            $ref: ../../../../components/schemas/StationInRoute.yaml
+          example:
+            id: 1
+            name: 台北車站
+            datetime: 2023-10-22T10:30
+            'on': []
+            'off': []
+    '403':
+      description: Permission Denied
+      $ref: ../../../../components/responses/ErrorMessage.yaml
+delete:
+  tags:
+    - driver
+  summary: 針對行程刪除停靠站
+  security:
+    - cookieAuth: []
+  responses:
+    '204':
+      description: Successful operation
+    '403':
+      description: Permission Denied
+      $ref: ../../../../components/responses/ErrorMessage.yaml

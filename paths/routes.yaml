@@ -1,0 +1,142 @@
+get:
+  tags:
+    - passenger
+    - driver
+  summary: 取得行程列表
+  security:
+    - cookieAuth: []
+  description: |-
+    不管是司機或乘客，所有取得行程的操作都是透過此 API 。 其 mode 參數需帶三種模式其中一種：
+     - available: 系統中現有有位置且允許搜尋的行程
+     - attending: 作為乘客參與的行程
+     - driving: 作為司機開車載人的行程
+
+     from, to 內的日期時間可接受 'now', 'today'
+  operationId: getRoutes
+  parameters:
+    - in: query
+      name: mode
+      description: 模式選擇
+      schema:
+        type: string
+        enum:
+          - available
+          - attending
+          - driving
+      example: available
+    - in: query
+      name: form
+      description: 起始日期時間
+      schema:
+        type: string
+        format: date-time
+        examples:
+          - 2023-10-22T08:30
+          - today
+          - now
+      example: now
+    - in: query
+      name: to
+      description: 結束日期時間
+      schema:
+        type: string
+        format: date
+      example: '2023-10-25'
+    - in: query
+      name: 'n'
+      description: 回傳筆數
+      schema:
+        type: integer
+      example: 1
+    - in: query
+      name: 'on'
+      description: 上車站點
+      schema:
+        type: integer
+      example: 2
+    - in: query
+      name: 'off'
+      description: 下載站點
+      schema:
+        type: integer
+      example: 3
+    - in: query
+      name: on-datetime
+      description: 上車時間。為相似度排序用，若未按相似度排序則無作用。
+      schema:
+        type: string
+        format: date-time
+      example: 2023-10-21T08:30
+    - in: query
+      name: off-datetime
+      description: 下車時間。為相似度排序用，若未按相似度排序則無作用。
+      schema:
+        type: string
+        format: date-time
+      example: 2023-10-21T09:30
+    - in: query
+      name: order-mode
+      description: 排序依據
+      schema:
+        type: string
+        enum:
+          - datetime
+          - similarity
+      example: datetime
+  responses:
+    '200':
+      description: 成功取得行程
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/Route.yaml
+post:
+  tags:
+    - driver
+  summary: 新增行程
+  security:
+    - cookieAuth: []
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            date:
+              type: string
+              format: date
+            workStatus:
+              type: boolean
+              description: true 上班, false 下班
+            stations:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    examples:
+                      - 10
+                  datetime:
+                    type: string
+                    format: date-time
+                    examples:
+                      - 2023-11-16T10:30
+            carInfo:
+              $ref: ../components/schemas/CarInfo.yaml
+        examples:
+          samplePostRoute:
+            $ref: ../components/examples/PostRoute.yaml
+  responses:
+    '201':
+      description: 成功建立行程
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Route.yaml
+          examples:
+            sampleNewRoute:
+              $ref: ../components/examples/NewRoute.yaml
