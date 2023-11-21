@@ -22,7 +22,7 @@ post:
               format: password
   responses:
     '204':
-      description: 登入成功
+      description: 登入成功， Session 寫入 Cookies 中
     '403':
       description: 登入失敗
       $ref: ../components/responses/ErrorMessage.yaml

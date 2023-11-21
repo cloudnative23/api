@@ -7,7 +7,7 @@ parameters:
       type: integer
       format: int64
       examples:
-        - '3'
+        - 3
 get:
   tags:
     - passenger
