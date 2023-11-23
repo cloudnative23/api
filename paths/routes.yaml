@@ -75,7 +75,7 @@ get:
         format: date-time
       example: 2023-10-21T09:30
     - in: query
-      name: order-mode
+      name: order-by
       description: 排序依據
       schema:
         type: string
