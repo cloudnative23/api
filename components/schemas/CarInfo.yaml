@@ -1,5 +1,8 @@
 type: object
 properties:
+  model:
+    type: string
+    format: string
   color:
     type: string
     format: string

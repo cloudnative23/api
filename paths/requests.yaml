@@ -32,6 +32,12 @@ get:
       schema:
         type: integer
       example: 3
+    - in: query
+      name: 'order-mode'
+      schema: 
+        type: string
+        enum: ['asc', 'desc']
+      example: asc
   responses:
     '200':
       description: 成功取得請求

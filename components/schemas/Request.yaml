@@ -22,9 +22,9 @@ properties:
     $ref: ./UserSimple.yaml
   route:
     $ref: ./Route.yaml
-  'on':
+  on-station:
     $ref: ./Station.yaml
-  'off':
+  off-station:
     $ref: ./Station.yaml
 example:
   id: 11
@@ -40,10 +40,10 @@ example:
     date: '2023-10-22'
     workStatus: false
     status: available
-    on:
+    on-station:
       id: 3
       name: 台積電新竹3廠東側門
-    off:
+    off-station:
       id: 2
       name: 台大校門口
     stations:

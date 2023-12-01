@@ -25,7 +25,7 @@ get:
           - driving
       example: available
     - in: query
-      name: form
+      name: from
       description: 起始日期時間
       schema:
         type: string
@@ -49,13 +49,13 @@ get:
         type: integer
       example: 1
     - in: query
-      name: 'on'
+      name: on-station
       description: 上車站點
       schema:
         type: integer
       example: 2
     - in: query
-      name: 'off'
+      name: off-station
       description: 下載站點
       schema:
         type: integer
@@ -83,6 +83,12 @@ get:
           - datetime
           - similarity
       example: datetime
+    - in: query
+      name: order-mode
+      schema: 
+        type: string
+        enum: ['asc', 'desc']
+      example: asc
   responses:
     '200':
       description: 成功取得行程
