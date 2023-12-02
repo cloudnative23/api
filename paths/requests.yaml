@@ -65,17 +65,17 @@ post:
             route:
               type: integer
               format: int64
-            'on':
+            on-station:
               type: integer
               format: int64
-            'off':
+            off-station:
               type: integer
               format: int64
           example:
             workStatus: false
             route: 10
-            'on': 1
-            'off': 3
+            on-station: 1
+            off-station: 3
   responses:
     '200':
       description: Request created
