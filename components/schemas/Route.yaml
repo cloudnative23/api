@@ -24,10 +24,20 @@ properties:
     type: array
     items:
       $ref: ./StationInRoute.yaml
+  n-passengers:
+    description: 目前乘客人數
+    type: integer
+    format: integer
   passengers:
     type: array
     items:
       $ref: ./UserSimpleWithContact.yaml
+  on-station:
+    description: 以目前登入乘客的角度，在此行程的上車站點
+    $ref: ./StationInRoute.yaml
+  off-station:
+    description: 以目前登入乘客的角度，在此行程的下車站點
+    $ref: ./StationInRoute.yaml
   driver:
     $ref: ./UserSimpleWithContact.yaml
   carInfo:

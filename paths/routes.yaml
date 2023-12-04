@@ -7,9 +7,9 @@ get:
     - cookieAuth: []
   description: |-
     不管是司機或乘客，所有取得行程的操作都是透過此 API 。 其 mode 參數需帶三種模式其中一種：
-     - available: 系統中現有有位置且允許搜尋的行程
-     - attending: 作為乘客參與的行程
-     - driving: 作為司機開車載人的行程
+     - available: 系統中現有有位置且允許搜尋的行程。 回傳值不包含 workStatus
+     - attending: 作為乘客參與的行程。 回傳值的 workStatus 為目前登入乘客的
+     - driving: 作為司機開車載人的行程。 回傳值的 workStatus 為司機的
 
      from, to 內的日期時間可接受 'now', 'today'
   operationId: getRoutes
@@ -98,6 +98,112 @@ get:
             type: array
             items:
               $ref: ../components/schemas/Route.yaml
+          examples:
+            available:
+              description: 此範例為 mode 設為 available 的範例
+              value:
+                - id: 10
+                  date: '2023-10-22'
+                  status: available
+                  n-passengers: 2
+                  stations:
+                    - id: 3
+                      name: 台積電新竹3廠東側門
+                      datetime: 2023-10-22T17:30
+                    - id: 1
+                      name: 台北車站
+                      datetime: 2023-10-22T17:50
+                    - id: 2
+                      name: 台大校門口
+                      datetime: 2023-10-22T18:10
+                  carInfo:
+                    model: Tesla Model 3
+                    color: 紅色
+                    capacity: 4
+                  driver:
+                    id: 3
+                    name: John James
+                    avatar: https://example.com/avatar.png
+            driving:
+              description: 此範例為 mode 設為 driving 的範例
+              value:
+                - id: 10
+                  date: '2023-10-22'
+                  workStatus: false
+                  n-passengers: 2
+                  status: available
+                  stations:
+                    - id: 3
+                      name: 台積電新竹3廠東側門
+                      datetime: 2023-10-22T17:30
+                      on-passengers:
+                        - 2
+                        - 4
+                      off-passengers: []
+                    - id: 1
+                      name: 台北車站
+                      datetime: 2023-10-22T17:50
+                      on-passengers: []
+                      off-passengers:
+                        - 4
+                    - id: 2
+                      name: 台大校門口
+                      datetime: 2023-10-22T18:10
+                      on-passengers: []
+                      off-passengers:
+                        - 4
+                  carInfo:
+                    model: Tesla Model 3
+                    color: 紅色
+                    capacity: 4
+                    licensePlateNumber: ABC-1234
+                  passengers:
+                    - id: 2
+                      name: Bill Gates
+                      phone: '0982104928'
+                    - id: 4
+                      name: Paul
+                      phone: '0954201859'
+                  driver:
+                    id: 3
+                    name: John James
+                    avatar: https://example.com/avatar.png
+                    phone: '0928123456'              
+            attending:
+              description: 此範例為 mode 設為 attending 的範例
+              value:
+                - id: 10
+                  date: '2023-10-22'
+                  workStatus: true
+                  n-passengers: 2
+                  status: available
+                  on-station:
+                    id: 3
+                    name: 台積電新竹3廠東側門
+                    datetime: 2023-10-22T17:30
+                  off-station:
+                    id: 2
+                    name: 台大校門口
+                    datetime: 2023-10-22T18:10
+                  stations:
+                    - id: 3
+                      name: 台積電新竹3廠東側門
+                      datetime: 2023-10-22T17:30
+                    - id: 1
+                      name: 台北車站
+                      datetime: 2023-10-22T17:50
+                    - id: 2
+                      name: 台大校門口
+                      datetime: 2023-10-22T18:10
+                  carInfo:
+                    model: Tesla Model 3
+                    color: 紅色
+                    capacity: 4
+                  driver:
+                    id: 3
+                    name: John James
+                    avatar: https://example.com/avatar.png
+                    phone: '0928123456'
 post:
   tags:
     - driver
