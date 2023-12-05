@@ -40,8 +40,11 @@ get:
       description: 結束日期時間
       schema:
         type: string
-        format: date
-      example: '2023-10-25'
+        format: datetime
+        examples:
+          - 2023-10-22T17:30
+          - today
+          - now
     - in: query
       name: 'n'
       description: 回傳筆數
