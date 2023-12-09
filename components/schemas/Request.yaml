@@ -3,6 +3,10 @@ properties:
   id:
     type: integer
     format: int64
+  timestamp:
+    type: string
+    format: date-time
+    readOnly: true
   status:
     type: string
     readOnly: true
@@ -29,7 +33,8 @@ properties:
 example:
   id: 11
   status: new
-  date: '2023-10-25'
+  date: '2023-10-20'
+  timestamp: '2023-10-15T20:23:20'
   workStatus: true
   passenger:
     id: 10

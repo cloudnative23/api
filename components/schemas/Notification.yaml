@@ -5,6 +5,11 @@ properties:
     format: int64
     examples:
       - 3
+  timestamp:
+    type: string
+    format: date-time
+    examples:
+      - 2023-10-22T18:10:20
   read:
     type: boolean
   for:
