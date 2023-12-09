@@ -6,12 +6,13 @@ get:
   security:
     - cookieAuth: []
   description: |-
-    不管是司機或乘客，所有取得行程的操作都是透過此 API 。 其 mode 參數需帶三種模式其中一種：
-     - available: 系統中現有有位置且允許搜尋的行程。 回傳值不包含 workStatus
-     - attending: 作為乘客參與的行程。 回傳值的 workStatus 為目前登入乘客的
-     - driving: 作為司機開車載人的行程。 回傳值的 workStatus 為司機的
+    不管是司機或乘客，取得行程列表的操作都是透過此 API 。 其 mode 參數需帶其中一個參數：
+     - search: 相似度搜尋行程
+     - driver-future: 司機的未來行程
+     - driver-history: 司機的過去行程
+     - passenger-future: 乘客的未來行程
+     - passenger-history: 乘客的過去行程
 
-     from, to 內的日期時間可接受 'now', 'today'
   operationId: getRoutes
   parameters:
     - in: query
@@ -20,31 +21,12 @@ get:
       schema:
         type: string
         enum:
-          - available
-          - attending
-          - driving
-      example: available
-    - in: query
-      name: from
-      description: 起始日期時間
-      schema:
-        type: string
-        format: date-time
-        examples:
-          - 2023-10-22T08:30
-          - today
-          - now
-      example: now
-    - in: query
-      name: to
-      description: 結束日期時間
-      schema:
-        type: string
-        format: datetime
-        examples:
-          - 2023-10-22T17:30
-          - today
-          - now
+          - search
+          - driver-future
+          - driver-history
+          - passenger-future
+          - passenger-history
+      example: search
     - in: query
       name: 'n'
       description: 回傳筆數
@@ -53,45 +35,30 @@ get:
       example: 1
     - in: query
       name: on-station
-      description: 上車站點
+      description: mode=search 時必填, 上車站點
       schema:
         type: integer
       example: 2
     - in: query
       name: off-station
-      description: 下車站點
+      description: mode=search 時必填, 下車站點
       schema:
         type: integer
       example: 3
     - in: query
       name: on-datetime
-      description: 上車時間。為相似度排序用，若未按相似度排序則無作用。
+      description: mode=search 時必填，上車時間，相似度排序用。
       schema:
         type: string
         format: date-time
       example: 2023-10-21T08:30
     - in: query
       name: off-datetime
-      description: 下車時間。為相似度排序用，若未按相似度排序則無作用。
+      description: mode=search 時必填，下車時間，為相似度排序用。
       schema:
         type: string
         format: date-time
       example: 2023-10-21T09:30
-    - in: query
-      name: order-by
-      description: 排序依據
-      schema:
-        type: string
-        enum:
-          - datetime
-          - similarity
-      example: datetime
-    - in: query
-      name: order-mode
-      schema: 
-        type: string
-        enum: ['asc', 'desc']
-      example: asc
   responses:
     '200':
       description: 成功取得行程
