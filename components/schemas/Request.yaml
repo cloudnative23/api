@@ -16,6 +16,7 @@ properties:
       - denied
       - expired
       - deleted
+      - cancelled
   date:
     type: string
     format: date
