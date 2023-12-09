@@ -12,6 +12,8 @@ properties:
       - 2023-10-22T18:10:20
   read:
     type: boolean
+  valid:
+    type: boolean
   for:
     type: string
     enum:
