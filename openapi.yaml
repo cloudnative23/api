@@ -8,6 +8,7 @@ info:
 servers:
   - url: https://www.cloudnative23.com/api
   - url: http://localhost:8000
+  - url: https://api-dev.cloudnative23.com
 tags:
   - name: user
     description: 跟使用者相關操作
