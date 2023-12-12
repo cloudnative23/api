@@ -41,17 +41,16 @@ example:
     id: 10
     name: John James
     avatar: https://example.com/avatar.png
+  on-station:
+    id: 3
+    name: 台積電新竹3廠東側門
+  off-station:
+    id: 2
+    name: 台大校門口
   route:
     id: 10
     date: '2023-10-22'
-    workStatus: false
     status: available
-    on-station:
-      id: 3
-      name: 台積電新竹3廠東側門
-    off-station:
-      id: 2
-      name: 台大校門口
     stations:
       - id: 3
         name: 台積電新竹3廠東側門
