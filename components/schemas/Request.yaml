@@ -44,9 +44,11 @@ example:
   on-station:
     id: 3
     name: 台積電新竹3廠東側門
+    datetime: '2023-10-15T15:00'
   off-station:
     id: 2
     name: 台大校門口
+    datetime: '2023-10-15T17:00'
   route:
     id: 10
     date: '2023-10-22'
