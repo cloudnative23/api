@@ -1,0 +1,44 @@
+post:
+  tags:
+    - user
+  summary: 註冊新帳號
+  security: []
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+              description: 要註冊的 E-mail
+            password:
+              type: string
+              format: password
+              description: 密碼
+            name:
+              type: string
+              format: string
+              description: 顯示名字
+            avatar:
+              type: string
+              format: url
+              description: 頭像網址
+            phone:
+              type: string
+              format: string
+              description: 電話號碼
+  responses:
+    '200':
+      description: 註冊成功
+      content: 
+        application/json:
+          schema:
+            $ref: ../components/schemas/UserSimpleWithContact.yaml
+    '409':
+      description: E-mail 重複
+      $ref: ../components/responses/ErrorMessage.yaml
+    '400':
+      description: E-mail 格式錯誤/缺少必要欄位
+      $ref: ../components/responses/ErrorMessage.yaml

@@ -23,6 +23,8 @@ paths:
     $ref: paths/logout.yaml
   /me:
     $ref: paths/me.yaml
+  /register:
+    $ref: paths/register.yaml
   /routes:
     $ref: paths/routes.yaml
   /routes/{id}:

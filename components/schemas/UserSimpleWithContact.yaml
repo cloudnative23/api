@@ -8,6 +8,9 @@ properties:
   avatar:
     type: string
     format: url
+  email:
+    type: string
+    format: email
   phone:
     type: string
     format: phone
@@ -15,4 +18,5 @@ example:
   id: 10
   name: John James
   avatar: https://example.com/avatar.png
-  phone: 912123456
+  email: user@example.com
+  phone: "0912123456"
